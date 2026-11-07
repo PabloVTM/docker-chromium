@@ -17,8 +17,10 @@ RUN \
   curl -o \
     /usr/share/selkies/www/icon.png \
     https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/chromium-logo.png && \
-  echo "**** install packages ****" && \
+  echo "**** upgrade base packages ****" && \
   apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+  echo "**** install packages ****" && \
   apt-get install -y --no-install-recommends \
     chromium \
     chromium-l10n && \
