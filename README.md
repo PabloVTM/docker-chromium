@@ -11,7 +11,7 @@ Images are published to GitHub Container Registry for `linux/amd64` and `linux/a
 | Tag | Content |
 | --- | --- |
 | `ghcr.io/pablovtm/chromium:latest` | Latest build of `master`. |
-| `ghcr.io/pablovtm/chromium:YYYY-MM-DD` | Dated version, e.g. `2026-11-07`. A new one is built every Monday with the latest Debian security updates and Chromium release. |
+| `ghcr.io/pablovtm/chromium:YYYY-MM-DD` | Dated version, e.g. `2026-11-07`. Each build upgrades the Debian packages, so a new dated version also brings the latest security fixes and Chromium release. |
 
 ## Quick start
 
@@ -101,6 +101,17 @@ docker logs -f chromium
 ```
 
 To update, pull the new image (`docker compose pull`) and recreate the container (`docker compose up -d`). Your `/config` volume is kept.
+
+## Releasing
+
+Images are built by GitHub Actions. A push to `master` publishes `latest`; a dated version is published by pushing a tag named after the day:
+
+```bash
+git tag 2026-11-09
+git push origin 2026-11-09
+```
+
+The workflow tests the image first, then publishes `ghcr.io/pablovtm/chromium:2026-11-09` and `latest` for `linux/amd64` and `linux/arm64`. There is no scheduled rebuild: tag a new version when you want one.
 
 ## Building
 
